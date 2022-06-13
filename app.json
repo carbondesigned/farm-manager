@@ -2,6 +2,7 @@
   "expo": {
     "name": "grownby-takehome",
     "slug": "grownby-takehome",
+    "owner": "devdylan",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
