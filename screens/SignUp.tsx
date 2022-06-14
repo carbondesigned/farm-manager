@@ -3,7 +3,6 @@ import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import SignupForm from '../components/SignupForm';
 import { useEffect } from 'react';
-import { auth } from '../utils/firbaseUtils';
 import { useGetUser } from '../hooks/useGetUser';
 
 export default function SignUp({ navigation }: RootTabScreenProps<'SignUp'>) {

@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
 import SignInForm from '../components/SigninForm';
 import { Text, View } from '../components/Themed';
 import { useGetUser } from '../hooks/useGetUser';
 import { RootTabScreenProps } from '../types';
-import { auth } from '../utils/firbaseUtils';
 
 export default function TabTwoScreen({
   navigation,

@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, View } from './Themed';
 import { TextInput, Button, StyleSheet } from 'react-native';
 import { object, string } from 'yup';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../utils/firbaseUtils';
 
 type Props = {
