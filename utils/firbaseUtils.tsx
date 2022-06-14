@@ -7,6 +7,8 @@ import {
   setPersistence,
   browserSessionPersistence,
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -18,8 +20,9 @@ const firebaseConfig = {
   appId: '1:572181010002:web:8e9d6d45b052bdac5af18b',
 };
 
-initializeApp(firebaseConfig);
-
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
 export const auth = getAuth();
 
 export async function signUp(email: string, password: string) {

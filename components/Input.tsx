@@ -12,9 +12,8 @@ const Input: FC<Props & FieldProps> = ({
   label,
   ...props
 }) => {
-  console.log(field);
   return (
-    <View>
+    <View style={styles.inputStyle}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput
         style={styles.input}
@@ -32,11 +31,12 @@ const Input: FC<Props & FieldProps> = ({
 const styles = StyleSheet.create({
   inputStyle: {
     flex: 1,
-    gap: 10,
+    gap: 5,
   },
   input: {
-    backgroundColor: '#eee',
-    padding: 5,
+    color: '#fff',
+    backgroundColor: '#1B1B1B',
+    padding: 10,
     fontSize: 15,
     borderRadius: 5,
   },
