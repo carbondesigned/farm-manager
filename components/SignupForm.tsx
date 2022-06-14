@@ -56,6 +56,7 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
+              secureTextEntry
               style={styles.input}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
@@ -99,8 +100,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   input: {
-    backgroundColor: '#eee',
-    padding: 5,
+    backgroundColor: '#1B1B1B',
+    color: '#fff',
+    padding: 10,
     fontSize: 15,
     borderRadius: 5,
   },

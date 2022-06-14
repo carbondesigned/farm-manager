@@ -142,7 +142,8 @@ function BottomTabNavigator() {
         name='CreateFarm'
         component={CreateFarmForm}
         options={({ navigation }: RootTabScreenProps<'CreateFarm'>) => ({
-          TabBarIcon: () => null,
+          title: 'Create Farm',
+          tabBarButton: () => null,
           tabBarStyle: { display: 'none' },
           headerLeft: () => (
             <Pressable

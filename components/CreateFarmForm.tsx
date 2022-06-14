@@ -1,46 +1,34 @@
 import { Field, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Text, View } from '../components/Themed';
-import {
-  Button,
-  Pressable,
-  StyleSheet,
-  TextInput,
-  Touchable,
-  TouchableOpacity,
-} from 'react-native';
+import { Button, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { object, string } from 'yup';
 import Input from './Input';
 import { doc, collection, setDoc } from 'firebase/firestore';
 import { db, storage } from '../utils/firbaseUtils';
 import * as DocumentPicker from 'expo-document-picker';
-import {
-  getDownloadURL,
-  getStorage,
-  listAll,
-  ref,
-  uploadBytes,
-} from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const CreateFarmForm = () => {
   const [image, setImage] = useState<File | Blob>({} as File | Blob);
+
   const farmRef = doc(collection(db, 'farms'));
   const storageRef = ref(storage, `farms/${farmRef.id}`);
-  const listRef = ref(storage, `farms`);
+
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const farmSchema = object({
     name: string().required(),
     about: string().required(),
     address: string().required(),
-    phone: string(),
+    phone: string().matches(phoneRegExp),
     website: string(),
     image: string(),
   });
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
-
     // @ts-ignore
     setImage(result.file);
-    console.log(result);
   };
 
   return (
@@ -55,17 +43,11 @@ const CreateFarmForm = () => {
       }}
       validationSchema={farmSchema}
       onSubmit={async (values) => {
-        console.log(values);
-        await uploadBytes(storageRef, image)
-          .then(() => {
-            console.log('uploaded');
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        await uploadBytes(storageRef, image).catch((err) => {
+          console.log(err);
+        });
         await getDownloadURL(ref(storage, `farms/${farmRef.id}`))
           .then((url) => {
-            console.log(url);
             values.image = url;
           })
           .catch((error) => {
@@ -83,21 +65,6 @@ const CreateFarmForm = () => {
         touched,
       }) => (
         <View style={styles.container}>
-          {/* {signInError.length > 0 && (
-            <Text style={styles.error}>{signInError}</Text>
-          )} */}
-          {/* <View>
-            <Text style={styles.inputLabel}>Name</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={handleChange('name')}
-              onBlur={handleBlur('name')}
-              value={values.name}
-            />
-            {touched.name && errors.name && (
-              <Text style={styles.error}>{errors.name}</Text>
-            )}
-          </View> */}
           <Field name='name' component={Input} label='Name' />
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>About</Text>

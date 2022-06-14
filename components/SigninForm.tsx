@@ -62,6 +62,7 @@ const SignInForm = ({ navigateToHome }: Props) => {
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
+              secureTextEntry
               style={styles.input}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
@@ -95,20 +96,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   input: {
-    backgroundColor: '#eee',
-    padding: 5,
+    backgroundColor: '#1B1B1B',
+    color: '#fff',
+    padding: 10,
     fontSize: 15,
     borderRadius: 5,
   },
   inputLabel: {
     fontSize: 15,
     fontWeight: 'bold',
-    paddingTop: 10,
   },
   error: {
     color: 'red',
     fontSize: 12,
-    marginVertical: 10,
+    marginBottom: 10,
   },
 });
 export default SignInForm;
