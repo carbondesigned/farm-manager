@@ -1,12 +1,32 @@
 import { Pressable, StyleSheet } from 'react-native';
-import { View } from '../components/Themed';
+import { View, Text } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import React, { useEffect } from 'react';
 import { useGetUser } from '../hooks/useGetUser';
 import { FontAwesome } from '@expo/vector-icons';
+import {
+  collection,
+  doc,
+  DocumentData,
+  getDocs,
+  onSnapshot,
+  query,
+} from 'firebase/firestore';
+import { db } from '../utils/firbaseUtils';
 
 export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
   const user = useGetUser();
+  const [farms, setFarms] = React.useState([] as DocumentData[]);
+  const q = query(collection(db, 'farms'));
+  const querySnapshot = getDocs(q);
+  querySnapshot
+    .then((snapshot) => {
+      const f = snapshot.docs.map((doc) => doc.data());
+      setFarms(f);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   useEffect(() => {
     if (!user) {
       navigation.navigate('SignIn');
@@ -20,6 +40,15 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
       >
         <FontAwesome name='plus' color='#fff' size={10} />
       </Pressable>
+      <View>
+        {farms.length < 1 && <Text>No farms yet</Text>}
+        {farms.length > 0 &&
+          farms.map((farm, idx) => (
+            <View key={idx} style={styles.farm}>
+              <Text>{farm.name}</Text>
+            </View>
+          ))}
+      </View>
     </View>
   );
 }
@@ -29,6 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
+  farm: {},
   fab: {
     position: 'absolute',
     bottom: 20,

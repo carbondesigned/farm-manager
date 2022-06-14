@@ -9,7 +9,10 @@ import { db, storage } from '../utils/firbaseUtils';
 import * as DocumentPicker from 'expo-document-picker';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-const CreateFarmForm = () => {
+type Props = {
+  navigateToHome: () => void;
+};
+const CreateFarmForm = ({ navigateToHome }: Props) => {
   const [image, setImage] = useState<File | Blob>({} as File | Blob);
 
   const farmRef = doc(collection(db, 'farms'));
@@ -53,7 +56,10 @@ const CreateFarmForm = () => {
           .catch((error) => {
             console.log(error);
           });
-        await setDoc(farmRef, values);
+        await setDoc(farmRef, values).then(() => {
+          console.log('success');
+          navigateToHome();
+        });
       }}
     >
       {({
@@ -86,8 +92,10 @@ const CreateFarmForm = () => {
           <TouchableOpacity>
             <Button onPress={pickDocument} title='Upload Image' />
           </TouchableOpacity>
-          {/* @ts-ignore */}
-          <Button title='Submit' onPress={handleSubmit} />
+          <TouchableOpacity>
+            {/* @ts-ignore */}
+            <Button title='Submit' onPress={handleSubmit} />
+          </TouchableOpacity>
         </View>
       )}
     </Formik>

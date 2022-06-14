@@ -23,7 +23,7 @@ import {
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import { signOutUtil } from '../utils/firbaseUtils';
-import CreateFarmForm from '../components/CreateFarmForm';
+import CreateFarm from '../screens/CreateFarm';
 
 export default function Navigation({
   colorScheme,
@@ -140,7 +140,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name='CreateFarm'
-        component={CreateFarmForm}
+        component={CreateFarm}
         options={({ navigation }: RootTabScreenProps<'CreateFarm'>) => ({
           title: 'Create Farm',
           tabBarButton: () => null,
