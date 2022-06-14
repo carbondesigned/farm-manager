@@ -1,8 +1,3 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {
@@ -18,14 +13,16 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
+import SignUp from '../screens/SignUp';
 import SignIn from '../screens/SignIn';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import Home from '../screens/Home';
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import { signOutUtil } from '../utils/firbaseUtils';
 
 export default function Navigation({
   colorScheme,
@@ -79,17 +76,20 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName='SignIn'
+      initialRouteName='Home'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name='SignIn'
-        component={SignIn}
-        options={({ navigation }: RootTabScreenProps<'SignIn'>) => ({
-          title: 'Sign In',
-          tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
+        name='SignUp'
+        component={SignUp}
+        options={({ navigation }: RootTabScreenProps<'SignUp'>) => ({
+          tabBarStyle: { display: 'none' },
+          title: 'Sign Up',
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name='user-plus' color={color} size={25} />
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -108,12 +108,38 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name='TabTwo'
-        component={TabTwoScreen}
+        name='SignIn'
+        component={SignIn}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name='code' color={color} />,
+          title: 'Sign In',
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name='user-circle' color={color} />
+          ),
         }}
+      />
+      <BottomTab.Screen
+        name='Home'
+        component={Home}
+        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+          tabBarButton: () => null,
+          tabBarStyle: { display: 'none' },
+          title: 'Home',
+          headerRight: () => (
+            <Pressable
+              onPress={() => signOutUtil()}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <FontAwesome
+                name='sign-out'
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
       />
     </BottomTab.Navigator>
   );

@@ -1,15 +1,17 @@
 import { Formik } from 'formik';
 import React from 'react';
-import { Text, View } from '../components/Themed';
+import { Text, View } from './Themed';
 import { TextInput, Button, StyleSheet } from 'react-native';
 import { object, string } from 'yup';
-import { signUp } from '../utils/firbaseUtils';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../utils/firbaseUtils';
 
 type Props = {
-  navigateToSignIn: () => void;
+  navigateToHome: () => void;
 };
-const SignupForm = ({ navigateToSignIn }: Props) => {
-  const signupSchema = object({
+const SignInForm = ({ navigateToHome }: Props) => {
+  const [signInError, setSignInError] = React.useState<string>('');
+  const signinSchema = object({
     email: string().email().required(),
     password: string().required(),
   });
@@ -19,15 +21,17 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
         email: '',
         password: '',
       }}
-      validationSchema={signupSchema}
+      validationSchema={signinSchema}
       onSubmit={(values) => {
         console.log(values);
-        signUp(values.email, values.password)
+        signInWithEmailAndPassword(auth, values.email, values.password)
           .then(() => {
-            navigateToSignIn();
+            localStorage.setItem('email', values.email);
+            navigateToHome();
           })
           .catch((error) => {
             console.log(error);
+            setSignInError(error.message);
           });
       }}
     >
@@ -38,9 +42,11 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
         values,
         errors,
         touched,
-        resetForm,
       }) => (
         <View>
+          {signInError.length > 0 && (
+            <Text style={styles.error}>{signInError}</Text>
+          )}
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
@@ -66,18 +72,8 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
             )}
           </View>
           <View style={styles.buttons}>
-            <Button
-              onPress={() => {
-                handleSubmit();
-                resetForm();
-              }}
-              title='Sign Up'
-            />
-            <Button
-              title='Sign In'
-              onPress={() => navigateToSignIn()}
-              color='transparent'
-            />
+            {/* @ts-ignore */}
+            <Button onPress={handleSubmit} title='Sign Up' />
           </View>
         </View>
       )}
@@ -107,11 +103,12 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 15,
     fontWeight: 'bold',
+    paddingTop: 10,
   },
   error: {
     color: 'red',
     fontSize: 12,
-    marginBottom: 10,
+    marginVertical: 10,
   },
 });
-export default SignupForm;
+export default SignInForm;

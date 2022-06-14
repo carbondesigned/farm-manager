@@ -1,5 +1,12 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  setPersistence,
+  browserSessionPersistence,
+} from 'firebase/auth';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -13,8 +20,22 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-const auth = getAuth();
+export const auth = getAuth();
 
 export async function signUp(email: string, password: string) {
   createUserWithEmailAndPassword(auth, email, password);
+}
+
+export async function signIn(email: string, password: string) {
+  setPersistence(auth, browserSessionPersistence)
+    .then(() => {
+      signInWithEmailAndPassword(auth, email, password);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+export async function signOutUtil() {
+  signOut(auth);
 }
