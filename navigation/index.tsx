@@ -23,6 +23,7 @@ import {
 } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import { signOutUtil } from '../utils/firbaseUtils';
+import CreateFarmForm from '../components/CreateFarmForm';
 
 export default function Navigation({
   colorScheme,
@@ -129,6 +130,29 @@ function BottomTabNavigator() {
             >
               <FontAwesome
                 name='sign-out'
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name='CreateFarm'
+        component={CreateFarmForm}
+        options={({ navigation }: RootTabScreenProps<'CreateFarm'>) => ({
+          TabBarIcon: () => null,
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Home')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <FontAwesome
+                name='chevron-left'
                 size={25}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}

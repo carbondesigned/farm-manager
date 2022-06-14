@@ -5,5 +5,4 @@ export type Farm = {
   address: string;
   phone: string;
   website: string;
-  tags: string;
 };

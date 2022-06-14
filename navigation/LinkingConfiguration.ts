@@ -30,6 +30,11 @@ const linking: LinkingOptions<RootStackParamList> = {
               TabTwoScreen: 'three',
             },
           },
+          CreateFarm: {
+            screens: {
+              TabTwoScreen: 'four',
+            },
+          },
         },
       },
       Modal: 'modal',

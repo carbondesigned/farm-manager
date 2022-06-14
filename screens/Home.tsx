@@ -14,7 +14,10 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
   }, [user]);
   return (
     <View style={styles.container}>
-      <Pressable style={styles.fab}>
+      <Pressable
+        style={styles.fab}
+        onPress={() => navigation.navigate('CreateFarm')}
+      >
         <FontAwesome name='plus' color='#fff' size={10} />
       </Pressable>
     </View>

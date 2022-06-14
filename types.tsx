@@ -29,6 +29,7 @@ export type RootTabParamList = {
   SignIn: undefined;
   SignUp: undefined;
   Home: undefined;
+  CreateFarm: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
