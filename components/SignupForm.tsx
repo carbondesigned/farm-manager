@@ -2,19 +2,15 @@ import { Formik } from 'formik';
 import React from 'react';
 import { Text, View } from '../components/Themed';
 import { TextInput, Button, StyleSheet } from 'react-native';
-import { object, string } from 'yup';
-import { auth, signUp } from '../utils/firbaseUtils';
+import { auth } from '../utils/firbaseUtils';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signupSchema } from '../schemas/signupSchema';
 
 type Props = {
   navigateToSignIn: () => void;
 };
 const SignupForm = ({ navigateToSignIn }: Props) => {
   const [signUpError, setSignUpError] = React.useState<string>('');
-  const signupSchema = object({
-    email: string().email().required(),
-    password: string().required(),
-  });
   return (
     <Formik
       initialValues={{

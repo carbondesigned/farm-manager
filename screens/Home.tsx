@@ -4,20 +4,13 @@ import { RootTabScreenProps } from '../types';
 import React, { useEffect } from 'react';
 import { useGetUser } from '../hooks/useGetUser';
 import { FontAwesome } from '@expo/vector-icons';
-import {
-  collection,
-  doc,
-  DocumentData,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from 'firebase/firestore';
+import { collection, DocumentData, getDocs, query } from 'firebase/firestore';
 import { db } from '../utils/firbaseUtils';
 import FarmCard from '../components/FarmCard';
 
 export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
   const [farms, setFarms] = React.useState([] as DocumentData[]);
+
   const user = useGetUser();
   useEffect(() => {
     if (!user) {
@@ -27,6 +20,7 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
 
   const q = query(collection(db, 'farms'));
   const querySnapshot = getDocs(q);
+  /* Getting the data from the database and setting it to the state. */
   querySnapshot
     .then((snapshot) => {
       const f = snapshot.docs.map((doc) => doc.data());
@@ -45,7 +39,10 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
       >
         <FontAwesome name='plus' color='#fff' size={10} />
       </Pressable>
+
+      {/* if there are no farms. */}
       {farms.length < 1 && <Text>No farms yet</Text>}
+
       <View style={styles.cards}>
         {farms.length > 0 &&
           farms.map((farm, idx) => <FarmCard key={idx} farm={farm} />)}
@@ -62,8 +59,8 @@ const styles = StyleSheet.create({
   },
   cards: {
     gap: 10,
+    padding: 0,
   },
-  farm: {},
   fab: {
     position: 'absolute',
     bottom: 20,
@@ -71,10 +68,5 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 15,
     backgroundColor: '#2196f3',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingVertical: 20,
   },
 });

@@ -8,18 +8,18 @@ import { doc, collection, setDoc } from 'firebase/firestore';
 import { db, storage } from '../utils/firbaseUtils';
 import * as DocumentPicker from 'expo-document-picker';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { phoneRegExp } from '../utils/phoneRegex';
 
 type Props = {
   navigateToHome: () => void;
 };
+
 const CreateFarmForm = ({ navigateToHome }: Props) => {
   const [image, setImage] = useState<File | Blob>({} as File | Blob);
 
   const farmRef = doc(collection(db, 'farms'));
   const storageRef = ref(storage, `farms/${farmRef.id}`);
 
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const farmSchema = object({
     name: string().required(),
     about: string().required(),

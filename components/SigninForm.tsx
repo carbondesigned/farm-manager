@@ -2,9 +2,9 @@ import { Formik } from 'formik';
 import React from 'react';
 import { Text, View } from './Themed';
 import { TextInput, Button, StyleSheet } from 'react-native';
-import { object, string } from 'yup';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../utils/firbaseUtils';
+import { signinSchema } from '../schemas/signinSchema';
 
 type Props = {
   navigateToHome: () => void;
@@ -12,10 +12,7 @@ type Props = {
 };
 const SignInForm = ({ navigateToHome, navigateToSignUp }: Props) => {
   const [signInError, setSignInError] = React.useState<string>('');
-  const signinSchema = object({
-    email: string().email().required(),
-    password: string().required(),
-  });
+
   return (
     <Formik
       initialValues={{

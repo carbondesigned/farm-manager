@@ -7,14 +7,21 @@ import { useGetUser } from '../hooks/useGetUser';
 
 export default function SignUp({ navigation }: RootTabScreenProps<'SignUp'>) {
   const user = useGetUser();
+  /* This is a React Hook that is checking if the user is logged in. If the user is logged in, it will
+navigate to the Home screen. */
   useEffect(() => {
     if (user) {
       navigation.navigate('Home');
     }
   }, [user]);
+
+  /**
+   * NavigateToSignIn() is a function that navigates to the SignIn screen
+   */
   const navigateToSignIn = () => {
     navigation.navigate('SignIn');
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
@@ -33,10 +40,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     paddingVertical: 20,
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });
