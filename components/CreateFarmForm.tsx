@@ -9,6 +9,7 @@ import { db, storage } from '../utils/firbaseUtils';
 import * as DocumentPicker from 'expo-document-picker';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { phoneRegExp } from '../utils/phoneRegex';
+import useGetFarms from '../hooks/useGetFarms';
 
 type Props = {
   navigateToHome: () => void;
@@ -16,7 +17,7 @@ type Props = {
 
 const CreateFarmForm = ({ navigateToHome }: Props) => {
   const [image, setImage] = useState<File | Blob>({} as File | Blob);
-
+  const { farms } = useGetFarms()
   const farmRef = doc(collection(db, 'farms'));
   const storageRef = ref(storage, `farms/${farmRef.id}`);
 
@@ -47,6 +48,11 @@ const CreateFarmForm = ({ navigateToHome }: Props) => {
       }}
       validationSchema={farmSchema}
       onSubmit={async (values) => {
+        // if farm name already exist in farms
+        if (farms.find(farm => farm.name === values.name)) {
+          alert('Farm name already exist');
+          return
+        }
         await uploadBytes(storageRef, image).catch((err) => {
           console.log(err);
         });

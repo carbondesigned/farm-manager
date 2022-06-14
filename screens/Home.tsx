@@ -4,13 +4,11 @@ import { RootTabScreenProps } from '../types';
 import React, { useEffect } from 'react';
 import { useGetUser } from '../hooks/useGetUser';
 import { FontAwesome } from '@expo/vector-icons';
-import { collection, DocumentData, getDocs, query } from 'firebase/firestore';
-import { db } from '../utils/firbaseUtils';
 import FarmCard from '../components/FarmCard';
+import useGetFarms from '../hooks/useGetFarms';
 
 export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
-  const [farms, setFarms] = React.useState([] as DocumentData[]);
-
+  const { farms } = useGetFarms()
   const user = useGetUser();
   useEffect(() => {
     if (!user) {
@@ -18,17 +16,6 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
     }
   }, [user]);
 
-  const q = query(collection(db, 'farms'));
-  const querySnapshot = getDocs(q);
-  /* Getting the data from the database and setting it to the state. */
-  querySnapshot
-    .then((snapshot) => {
-      const f = snapshot.docs.map((doc) => doc.data());
-      setFarms(f);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 
   return (
     <View style={styles.container}>
