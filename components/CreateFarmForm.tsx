@@ -71,10 +71,16 @@ const CreateFarmForm = ({ navigateToHome }: Props) => {
         touched,
       }) => (
         <View style={styles.container}>
-          <Field name='name' component={Input} label='Name' />
+          <Field
+            name='name'
+            component={Input}
+            label='Name'
+            testID='farm-name'
+          />
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>About</Text>
             <TextInput
+              testID='farm-about'
               multiline
               numberOfLines={6}
               style={styles.input}
@@ -86,15 +92,33 @@ const CreateFarmForm = ({ navigateToHome }: Props) => {
               <Text style={styles.error}>{errors.about}</Text>
             )}
           </View>
-          <Field name='address' component={Input} label='Address' />
-          <Field name='phone' component={Input} label='Phone' />
-          <Field name='website' component={Input} label='Website' />
+          <Field
+            name='address'
+            testID='farm-address'
+            component={Input}
+            label='Address'
+          />
+          <Field
+            name='phone'
+            testID='farm-phone'
+            component={Input}
+            label='Phone'
+          />
+          <Field
+            name='website'
+            component={Input}
+            testID='farm-website'
+            label='Website'
+          />
           <TouchableOpacity>
             <Button onPress={pickDocument} title='Upload Image' />
           </TouchableOpacity>
           <TouchableOpacity>
-            {/* @ts-ignore */}
-            <Button title='Submit' onPress={handleSubmit} />
+            <Button
+              title='Submit'
+              testID='create-farm-button'
+              onPress={handleSubmit}
+            />
           </TouchableOpacity>
         </View>
       )}

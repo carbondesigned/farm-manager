@@ -3,12 +3,14 @@ import React from 'react';
 import { Text, View } from '../components/Themed';
 import { TextInput, Button, StyleSheet } from 'react-native';
 import { object, string } from 'yup';
-import { signUp } from '../utils/firbaseUtils';
+import { auth, signUp } from '../utils/firbaseUtils';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 type Props = {
   navigateToSignIn: () => void;
 };
 const SignupForm = ({ navigateToSignIn }: Props) => {
+  const [signUpError, setSignUpError] = React.useState<string>('');
   const signupSchema = object({
     email: string().email().required(),
     password: string().required(),
@@ -22,12 +24,13 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
       validationSchema={signupSchema}
       onSubmit={(values) => {
         console.log(values);
-        signUp(values.email, values.password)
+        createUserWithEmailAndPassword(auth, values.email, values.password)
           .then(() => {
             navigateToSignIn();
           })
           .catch((error) => {
             console.log(error);
+            setSignUpError(error.message);
           });
       }}
     >
@@ -38,12 +41,17 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
         values,
         errors,
         touched,
-        resetForm,
       }) => (
         <View>
+          {signUpError.length > 0 && (
+            <Text testID='signin-error' style={styles.error}>
+              {signUpError}
+            </Text>
+          )}
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
+              testID='email'
               style={styles.input}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
@@ -56,6 +64,7 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
+              testID='password'
               secureTextEntry
               style={styles.input}
               onChangeText={handleChange('password')}
@@ -68,11 +77,9 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
           </View>
           <View style={styles.buttons}>
             <Button
-              onPress={() => {
-                handleSubmit();
-                resetForm();
-              }}
+              onPress={handleSubmit}
               title='Sign Up'
+              testID='signup-button'
             />
             <Button
               title='Sign In'

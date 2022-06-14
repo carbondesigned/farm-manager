@@ -11,6 +11,9 @@ export default function TabTwoScreen({
   const navigateToHome = () => {
     navigation.navigate('Home');
   };
+  const navigateToSignUp = () => {
+    navigation.navigate('SignUp');
+  };
   const user = useGetUser();
   useEffect(() => {
     if (user) {
@@ -20,7 +23,10 @@ export default function TabTwoScreen({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign In</Text>
-      <SignInForm navigateToHome={navigateToHome} />
+      <SignInForm
+        navigateToSignUp={navigateToSignUp}
+        navigateToHome={navigateToHome}
+      />
     </View>
   );
 }

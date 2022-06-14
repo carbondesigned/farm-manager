@@ -5,9 +5,11 @@ import { View, Text } from './Themed';
 
 type Props = {
   label: string;
+  testID?: string;
 };
 const Input: FC<Props & FieldProps> = ({
   field,
+  testID,
   form: { errors, touched, handleChange, handleBlur },
   label,
   ...props
@@ -16,6 +18,7 @@ const Input: FC<Props & FieldProps> = ({
     <View style={styles.inputStyle}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput
+        testID={testID}
         style={styles.input}
         onChangeText={handleChange(field.name)}
         {...field}

@@ -11,13 +11,20 @@ import {
   getDocs,
   onSnapshot,
   query,
+  where,
 } from 'firebase/firestore';
 import { db } from '../utils/firbaseUtils';
 import FarmCard from '../components/FarmCard';
 
 export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
-  const user = useGetUser();
   const [farms, setFarms] = React.useState([] as DocumentData[]);
+  const user = useGetUser();
+  useEffect(() => {
+    if (!user) {
+      navigation.navigate('SignIn');
+    }
+  }, [user]);
+
   const q = query(collection(db, 'farms'));
   const querySnapshot = getDocs(q);
   querySnapshot
@@ -28,15 +35,12 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
     .catch((error) => {
       console.log(error);
     });
-  useEffect(() => {
-    if (!user) {
-      navigation.navigate('SignIn');
-    }
-  }, [user]);
+
   return (
     <View style={styles.container}>
       <Pressable
         style={styles.fab}
+        testID='create-farm-button'
         onPress={() => navigation.navigate('CreateFarm')}
       >
         <FontAwesome name='plus' color='#fff' size={10} />

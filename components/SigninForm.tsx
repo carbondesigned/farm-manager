@@ -8,8 +8,9 @@ import { auth } from '../utils/firbaseUtils';
 
 type Props = {
   navigateToHome: () => void;
+  navigateToSignUp: () => void;
 };
-const SignInForm = ({ navigateToHome }: Props) => {
+const SignInForm = ({ navigateToHome, navigateToSignUp }: Props) => {
   const [signInError, setSignInError] = React.useState<string>('');
   const signinSchema = object({
     email: string().email().required(),
@@ -45,7 +46,9 @@ const SignInForm = ({ navigateToHome }: Props) => {
       }) => (
         <View>
           {signInError.length > 0 && (
-            <Text style={styles.error}>{signInError}</Text>
+            <Text testID='signin-error' style={styles.error}>
+              Error: {signInError}
+            </Text>
           )}
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>Email</Text>
@@ -76,9 +79,15 @@ const SignInForm = ({ navigateToHome }: Props) => {
           </View>
           <View style={styles.buttons}>
             <Button
-              testID='signin-button'
               onPress={handleSubmit}
+              title='Sign In'
+              testID='signin-button'
+            />
+            <Button
+              testID='return-to-signup'
               title='Sign Up'
+              onPress={() => navigateToSignUp()}
+              color='transparent'
             />
           </View>
         </View>

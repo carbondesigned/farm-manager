@@ -129,6 +129,7 @@ function BottomTabNavigator() {
               })}
             >
               <FontAwesome
+                testID='signout-button'
                 name='sign-out'
                 size={25}
                 color={Colors[colorScheme].text}
