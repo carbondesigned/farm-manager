@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { Text, View } from '../components/Themed';
-import { TextInput, Button, StyleSheet } from 'react-native';
+import { TextInput, Button, StyleSheet, useColorScheme } from 'react-native';
 import { auth } from '../utils/firbaseUtils';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { signupSchema } from '../schemas/signupSchema';
@@ -11,6 +11,7 @@ type Props = {
 };
 const SignupForm = ({ navigateToSignIn }: Props) => {
   const [signUpError, setSignUpError] = React.useState<string>('');
+  const colorScheme = useColorScheme()
   return (
     <Formik
       initialValues={{
@@ -48,7 +49,7 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
               testID='email'
-              style={styles.input}
+              style={[styles.input, { backgroundColor: colorScheme === "light" ? "#eee" : "#1B1B1B", color: colorScheme === "light" ? "#B1B1B" : "#eee" }]}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
@@ -62,7 +63,7 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
             <TextInput
               testID='password'
               secureTextEntry
-              style={styles.input}
+              style={[styles.input, { backgroundColor: colorScheme === "light" ? "#eee" : "#1B1B1B", color: colorScheme === "light" ? "#B1B1B" : "#eee" }]}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
@@ -80,7 +81,7 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
             <Button
               title='Sign In'
               onPress={() => navigateToSignIn()}
-              color='transparent'
+              color={colorScheme === "light" ? "#ddd" : "transparent"}
             />
           </View>
         </View>

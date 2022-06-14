@@ -1,6 +1,6 @@
 import { FieldProps } from 'formik';
 import React, { FC } from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, useColorScheme } from 'react-native';
 import { View, Text } from './Themed';
 
 type Props = {
@@ -14,12 +14,13 @@ const Input: FC<Props & FieldProps> = ({
   label,
   ...props
 }) => {
+  const colorScheme = useColorScheme()
   return (
     <View style={styles.inputStyle}>
       <Text style={styles.inputLabel}>{label}</Text>
       <TextInput
         testID={testID}
-        style={styles.input}
+        style={[styles.input, { backgroundColor: colorScheme === "light" ? "#eee" : "#1B1B1B", color: colorScheme === "light" ? "#B1B1B" : "#eee" }]}
         onChangeText={handleChange(field.name)}
         {...field}
         {...props}

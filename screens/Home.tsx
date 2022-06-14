@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, ScrollView, StyleSheet } from 'react-native';
 import { View, Text } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import React, { useEffect } from 'react';
@@ -43,10 +43,10 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
       {/* if there are no farms. */}
       {farms.length < 1 && <Text>No farms yet</Text>}
 
-      <View style={styles.cards}>
+      <ScrollView>
         {farms.length > 0 &&
           farms.map((farm, idx) => <FarmCard key={idx} farm={farm} />)}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -57,12 +57,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     padding: 20,
   },
-  cards: {
-    gap: 10,
-    padding: 0,
-  },
   fab: {
     position: 'absolute',
+    zIndex: 100,
     bottom: 20,
     right: 20,
     borderRadius: 50,

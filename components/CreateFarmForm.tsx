@@ -1,7 +1,7 @@
 import { Field, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Text, View } from '../components/Themed';
-import { Button, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, TextInput, TouchableOpacity, useColorScheme } from 'react-native';
 import { object, string } from 'yup';
 import Input from './Input';
 import { doc, collection, setDoc } from 'firebase/firestore';
@@ -34,6 +34,7 @@ const CreateFarmForm = ({ navigateToHome }: Props) => {
     setImage(result.file);
   };
 
+  const colorScheme = useColorScheme();
   return (
     <Formik
       initialValues={{
@@ -83,7 +84,7 @@ const CreateFarmForm = ({ navigateToHome }: Props) => {
               testID='farm-about'
               multiline
               numberOfLines={6}
-              style={styles.input}
+              style={[styles.input, { backgroundColor: colorScheme === "light" ? "#eee" : "#1B1B1B", color: colorScheme === "light" ? "#B1B1B" : "#eee" }]}
               onChangeText={handleChange('about')}
               onBlur={handleBlur('about')}
               value={values.about}
