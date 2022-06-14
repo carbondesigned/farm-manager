@@ -50,6 +50,7 @@ const SignInForm = ({ navigateToHome }: Props) => {
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
+              testID='email'
               style={styles.input}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
@@ -62,6 +63,7 @@ const SignInForm = ({ navigateToHome }: Props) => {
           <View style={styles.inputStyle}>
             <Text style={styles.inputLabel}>Password</Text>
             <TextInput
+              testID='password'
               secureTextEntry
               style={styles.input}
               onChangeText={handleChange('password')}
@@ -73,8 +75,11 @@ const SignInForm = ({ navigateToHome }: Props) => {
             )}
           </View>
           <View style={styles.buttons}>
-            {/* @ts-ignore */}
-            <Button onPress={handleSubmit} title='Sign Up' />
+            <Button
+              testID='signin-button'
+              onPress={handleSubmit}
+              title='Sign Up'
+            />
           </View>
         </View>
       )}

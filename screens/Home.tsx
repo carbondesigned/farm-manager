@@ -13,6 +13,7 @@ import {
   query,
 } from 'firebase/firestore';
 import { db } from '../utils/firbaseUtils';
+import FarmCard from '../components/FarmCard';
 
 export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
   const user = useGetUser();
@@ -40,14 +41,10 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
       >
         <FontAwesome name='plus' color='#fff' size={10} />
       </Pressable>
-      <View>
-        {farms.length < 1 && <Text>No farms yet</Text>}
+      {farms.length < 1 && <Text>No farms yet</Text>}
+      <View style={styles.cards}>
         {farms.length > 0 &&
-          farms.map((farm, idx) => (
-            <View key={idx} style={styles.farm}>
-              <Text>{farm.name}</Text>
-            </View>
-          ))}
+          farms.map((farm, idx) => <FarmCard key={idx} farm={farm} />)}
       </View>
     </View>
   );
@@ -57,6 +54,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
+    padding: 20,
+  },
+  cards: {
+    gap: 10,
   },
   farm: {},
   fab: {

@@ -8,6 +8,6 @@ export const useGetUser = () => {
     auth.onAuthStateChanged((u) => {
       setUser(u);
     });
-  }, []);
+  }, [auth.onAuthStateChanged]);
   return user;
 };
