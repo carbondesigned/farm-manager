@@ -39,7 +39,7 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
         errors,
         touched,
       }) => (
-        <View>
+        <View style={styles.form}>
           {signUpError.length > 0 && (
             <Text testID='signin-error' style={styles.error}>
               {signUpError}
@@ -91,6 +91,10 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
 };
 
 const styles = StyleSheet.create({
+  form: {
+    gap: 10,
+    padding: 0,
+  },
   inputStyle: {
     flex: 1,
     gap: 10,
