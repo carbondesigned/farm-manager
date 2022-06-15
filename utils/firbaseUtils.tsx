@@ -1,13 +1,5 @@
 import { initializeApp } from 'firebase/app';
 import {
-  APIKEY,
-  AUTHDOMAIN,
-  PROJECTID,
-  STORAGEBUCKET,
-  MESSAGINGSENDERID,
-  APPID,
-} from '@env';
-import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -20,12 +12,12 @@ import { getStorage } from 'firebase/storage';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyAnTViUmOgDrdZ31CBL3AwO2DvvVn3_i7M',
-  authDomain: 'grownby-takehome-18273.firebaseapp.com',
-  projectId: 'grownby-takehome-18273',
-  storageBucket: 'grownby-takehome-18273.appspot.com',
-  messagingSenderId: '747948422374',
-  appId: '1:747948422374:web:c5816b929f64a1c733f727',
+  apiKey: "AIzaSyDTuSpdZU2J20nKt1SAlDvzbGrcETMwv2c",
+  authDomain: "grownby-takehome-96778.firebaseapp.com",
+  projectId: "grownby-takehome-96778",
+  storageBucket: "grownby-takehome-96778.appspot.com",
+  messagingSenderId: "209861784160",
+  appId: "1:209861784160:web:f3d6fea7dae7b4a3e6c905"
 };
 
 const app = initializeApp(firebaseConfig);
