@@ -11,7 +11,7 @@ type Props = {
 };
 const SignupForm = ({ navigateToSignIn }: Props) => {
   const [signUpError, setSignUpError] = React.useState<string>('');
-  const colorScheme = useColorScheme()
+  const colorScheme = useColorScheme();
   return (
     <Formik
       initialValues={{
@@ -49,7 +49,13 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
             <Text style={styles.inputLabel}>Email</Text>
             <TextInput
               testID='email'
-              style={[styles.input, { backgroundColor: colorScheme === "light" ? "#eee" : "#1B1B1B", color: colorScheme === "light" ? "#B1B1B" : "#eee" }]}
+              style={[
+                styles.input,
+                {
+                  backgroundColor: colorScheme === 'light' ? '#eee' : '#1B1B1B',
+                  color: colorScheme === 'light' ? '#B1B1B' : '#eee',
+                },
+              ]}
               onChangeText={handleChange('email')}
               onBlur={handleBlur('email')}
               value={values.email}
@@ -63,13 +69,19 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
             <TextInput
               testID='password'
               secureTextEntry
-              style={[styles.input, { backgroundColor: colorScheme === "light" ? "#eee" : "#1B1B1B", color: colorScheme === "light" ? "#B1B1B" : "#eee" }]}
+              style={[
+                styles.input,
+                {
+                  backgroundColor: colorScheme === 'light' ? '#eee' : '#1B1B1B',
+                  color: colorScheme === 'light' ? '#B1B1B' : '#eee',
+                },
+              ]}
               onChangeText={handleChange('password')}
               onBlur={handleBlur('password')}
               value={values.password}
             />
-            {touched.email && errors.email && (
-              <Text style={styles.error}>{errors.email}</Text>
+            {touched.password && errors.password && (
+              <Text style={styles.error}>{errors.password}</Text>
             )}
           </View>
           <View style={styles.buttons}>
@@ -81,7 +93,7 @@ const SignupForm = ({ navigateToSignIn }: Props) => {
             <Button
               title='Sign In'
               onPress={() => navigateToSignIn()}
-              color={colorScheme === "light" ? "#ddd" : "transparent"}
+              color={colorScheme === 'light' ? '#ddd' : 'transparent'}
             />
           </View>
         </View>

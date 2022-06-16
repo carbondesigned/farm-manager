@@ -10,11 +10,30 @@ type Props = {
 function FarmCard({ farm }: Props) {
   const colorScheme = useColorScheme();
   return (
-    <View style={[styles.card, { backgroundColor: colorScheme === "light" ? "#eee" : "#1B1B1B" }]}>
+    <View
+      style={[
+        styles.card,
+        { backgroundColor: colorScheme === 'light' ? '#eee' : '#1B1B1B' },
+      ]}
+    >
       <Image style={styles.img} source={{ uri: farm.image }} />
       <View style={styles.content}>
-        <Text style={[styles.name, { color: colorScheme === "light" ? "#1B1B1B" : "#eee" }]}>{farm.name}</Text>
-        <Text style={[styles.address, { color: colorScheme === "light" ? "#1B1B1B" : "#eee" }]}>{farm.address}</Text>
+        <Text
+          style={[
+            styles.name,
+            { color: colorScheme === 'light' ? '#1B1B1B' : '#eee' },
+          ]}
+        >
+          {farm.name}
+        </Text>
+        <Text
+          style={[
+            styles.address,
+            { color: colorScheme === 'light' ? '#1B1B1B' : '#eee' },
+          ]}
+        >
+          {farm.address}
+        </Text>
       </View>
     </View>
   );
@@ -36,13 +55,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   name: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 20,
     fontWeight: 'bold',
   },
   address: {
-    color: "#fff",
-  }
+    color: '#fff',
+  },
 });
 
 export default FarmCard;

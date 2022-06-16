@@ -8,14 +8,13 @@ import FarmCard from '../components/FarmCard';
 import useGetFarms from '../hooks/useGetFarms';
 
 export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
-  const { farms } = useGetFarms()
+  const { farms } = useGetFarms();
   const user = useGetUser();
   useEffect(() => {
     if (!user) {
       navigation.navigate('SignIn');
     }
   }, [user]);
-
 
   return (
     <View style={styles.container}>
@@ -30,7 +29,7 @@ export default function Home({ navigation }: RootTabScreenProps<'Home'>) {
       {/* if there are no farms. */}
       {farms.length < 1 && <Text>No farms yet</Text>}
 
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.cards}>
         {farms.length > 0 &&
           farms.map((farm, idx) => <FarmCard key={idx} farm={farm} />)}
       </ScrollView>
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     padding: 20,
   },
+  cards: {},
   fab: {
     position: 'absolute',
     zIndex: 100,
